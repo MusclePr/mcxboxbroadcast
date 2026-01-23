@@ -1,5 +1,5 @@
 services:
-  broadcaster:
+  mcxboxbroadcast:
     image: ghcr.io/musclepr/mcxboxbroadcast:latest
     build:
       context: .

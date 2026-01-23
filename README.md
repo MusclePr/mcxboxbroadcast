@@ -6,25 +6,39 @@ MCXboxBroadcast のスタンドアロンを Docker で実行するための最�
 
 ## 使い方
 
-### ビルド
+### compose なし
 
-```bash
-docker compose build
-```
+  ```bash
+  docker run --rm -it -v ./data:/data ghcr.io/musclepr/mcxboxbroadcast:latest
+  ```
 
-### 起動
+### compose 使用
 
-```bash
-docker compose up -d
-```
+- compose.yml
 
-### 終了
+  ```yaml
+  services:
+    mcxboxbroadcast:
+      image: ghcr.io/musclepr/mcxboxbroadcast:latest
+      volumes:
+        - "./data:/data"
+      tty: true
+      stdin_open: true
+  ```
 
-```bash
-docker compose down
-```
+- 起動
 
-初回起動時に ./data が作成され、コンテナ内の /data にマウントされます。
+  ```bash
+  docker compose up -d
+  ```
+
+  初回起動時に ./data が作成され、コンテナ内の /data にマウントされます。
+
+- 終了
+
+  ```bash
+  docker compose down
+  ```
 
 ## 環境変数
 
