@@ -1,0 +1,9 @@
+services:
+  broadcaster:
+    image: ghcr.io/musclepr/mcxboxbroadcast:latest
+    build:
+      context: .
+    volumes:
+      - "./data:/data"
+    tty: true
+    stdin_open: true
