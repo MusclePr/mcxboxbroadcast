@@ -46,7 +46,7 @@ MCXboxBroadcast のスタンドアロンを Docker で実行するための最�
 - `VERSION` : リリースタグ（既定: `latest`）
 - `DOWNLOAD_URL` : 直接ダウンロード URL（指定時は `VERSION` を無視）
 - `JAR` : 保存先 JAR パス（既定: `./bin/MCXboxBroadcastStandalone.jar`）
-- `UID` / `GID` : /data の所有ユーザー（既定: 1000）
+- `PUID` / `PGID` : /data の所有ユーザー（既定: 1000）
 
 ## ボリューム
 

@@ -1,10 +1,10 @@
 FROM eclipse-temurin:21-jre
 
-ARG UID=1000
-ARG GID=1000
+ARG PUID=1000
+ARG PGID=1000
 
-ENV UID=${UID}
-ENV GID=${GID}
+ENV PUID=${PUID}
+ENV PGID=${PGID}
 
 RUN id ubuntu > /dev/null 2>&1 && deluser ubuntu
 
