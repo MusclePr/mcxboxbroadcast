@@ -7,7 +7,7 @@ set -euo pipefail
 REPO="${REPO:-MCXboxBroadcast/Broadcaster}"
 JAR="${JAR:-./bin/MCXboxBroadcastStandalone.jar}"
 AUTO_UPDATE="${AUTO_UPDATE:-false}"
-AUTO_UPDATE_CRON="${AUTO_UPDATE_CRON:-0 */8 * * *}"
+AUTO_UPDATE_CRON="${AUTO_UPDATE_CRON:-0 */4 * * *}"
 
 #
 # Initial update check

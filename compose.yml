@@ -7,7 +7,7 @@ services:
       - "./data:/data"
     environment:
       - "AUTO_UPDATE=true"
-      - "AUTO_UPDATE_CRON=0 */8 * * *"
+      - "AUTO_UPDATE_CRON=0 */4 * * *"
       - "SERVER_NAME=A-B-C-D Minecraft Server"
       - "WORLD_NAME=HUB Entrance"
       - "MAX_PLAYERS=100"

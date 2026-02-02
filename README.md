@@ -1,34 +1,40 @@
 # Dockerized MCXboxBroadcast
 
-MCXboxBroadcast のスタンドアロンを Docker で実行するための環境です。
+[MCXboxBroadcast](https://github.com/MCXboxBroadcast/Broadcaster) の[スタンドアロン](https://github.com/MCXboxBroadcast/Broadcaster/tree/master/bootstrap/standalone)を Docker で実行するための環境です。
 
-起動時に GitHub Releases から最新の Standalone JAR を取得して実行します。
+本家の Docker イメージとは以下の点で異なります。
 
-AUTO_UPDATE=true で８時間毎に最新版のダウンロードチェックを行います。
+- 起動時に GitHub Releases から最新の Standalone JAR を取得して実行します。
+- デフォルトで 4 時間毎に最新版のダウンロードチェックを行います。
+- 最低限のパラメータは、環境変数で設定可能にしました。
 
 ## 使い方
 
-### compose なし
+### docker run 使用
+
+- 起動
 
   ```bash
-  docker run --rm -it -v ./data:/data ghcr.io/musclepr/mcxboxbroadcast:latest
+  docker run --rm -it -e PUBLIC_HOST=mcbe.a-b-c-d.com:19132 -v ./data:/data ghcr.io/musclepr/mcxboxbroadcast:latest
   ```
+
+  初回だけ、ログから URL とキーを取得し、ブラウザ経由で認証を手動で完了してください。
 
 ### compose 使用
 
 - compose.yml
+  
+  ご自身の環境に合わせて変更してください。
 
   ```yaml
   services:
     mcxboxbroadcast:
       image: ghcr.io/musclepr/mcxboxbroadcast:latest
-      build:
-        context: .
       volumes:
         - "./data:/data"
       environment:
         - "AUTO_UPDATE=true"
-        - "AUTO_UPDATE_CRON=0 */8 * * *"
+        - "AUTO_UPDATE_CRON=0 */4 * * *"
         - "SERVER_NAME=A-B-C-D Minecraft Server"
         - "WORLD_NAME=HUB Entrance"
         - "MAX_PLAYERS=100"
@@ -37,7 +43,7 @@ AUTO_UPDATE=true で８時間毎に最新版のダウンロードチェックを
       stdin_open: true
   ```
 
-- 起動
+- 起動（-d デーモン起動）
 
   ```bash
   docker compose up -d
@@ -59,8 +65,8 @@ AUTO_UPDATE=true で８時間毎に最新版のダウンロードチェックを
 - `VERSION` : リリースタグ（既定: `latest`）
 - `DOWNLOAD_URL` : 直接ダウンロード URL（指定時は `VERSION` を無視）
 - `JAVA_OPTS` : Java プロセスへの追加オプション（例: `-Xmx1G`）
-- `AUTO_UPDATE` : `true` に設定すると自動アップデートを有効にします（既定: `false`）
-- `AUTO_UPDATE_CRON` : 自動アップデートのスケジュール（既定: `0 */8 * * *`）
+- `AUTO_UPDATE` : 自動アップデートの有効/無効を設定します（既定: `true`）
+- `AUTO_UPDATE_CRON` : 自動アップデートのスケジュール（既定: `0 */4 * * *`）
 - `SERVER_NAME` : 公開するサーバー名
 - `WORLD_NAME` : 公開するワールド名
 - `MAX_PLAYERS` : 公開する最大参加可能人数
@@ -68,12 +74,14 @@ AUTO_UPDATE=true で８時間毎に最新版のダウンロードチェックを
 
 ## 設定の更新
 
-以下の環境変数により、`/data/config.yml` に対応する項目内容が上書きされ、更新があった場合、java を再起動します。
+以下の環境変数により、`/data/config.yml` に対応する項目内容が上書きされます。
 
 - `SERVER_NAME` ---> `.session.session-info.host-name`
 - `WORLD_NAME`  ---> `.session.session-info.world-name`
 - `MAX_PLAYERS` ---> `.session.session-info.max-players`
 - `PUBLIC_HOST` ---> `.session.session-info.ip` : `.session.session-info.port`
+
+更新があった場合、java を再起動します。
 
 ```yaml
 # Core session settings
