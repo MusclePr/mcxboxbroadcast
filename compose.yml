@@ -5,5 +5,12 @@ services:
       context: .
     volumes:
       - "./data:/data"
+    environment:
+      - "AUTO_UPDATE=true"
+      - "AUTO_UPDATE_CRON=0 */8 * * *"
+      - "SERVER_NAME=A-B-C-D Minecraft Server"
+      - "WORLD_NAME=HUB Entrance"
+      - "MAX_PLAYERS=100"
+      - "PUBLIC_HOST=mcbe.a-b-c-d.com:19132"
     tty: true
     stdin_open: true

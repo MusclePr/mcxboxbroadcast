@@ -20,7 +20,7 @@ fi
 
 echo "Running with PUID: $PUID, PGID: $PGID"
 
-chown -R app:app "/data"
+chown app:app "/data"
 
 # Execute the command as the app user
 exec setpriv --reuid=app --regid=app --init-groups "${@}"
